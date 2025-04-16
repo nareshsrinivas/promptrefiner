@@ -1,1 +1,3 @@
-// Flows will be imported for their side effects in this file.
+import '@/ai/flows/enhance-prompt.ts';
+import '@/ai/flows/correct-prompt.ts';
+import '@/ai/flows/analyze-prompt.ts';
