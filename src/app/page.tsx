@@ -14,6 +14,8 @@ import { analyzePrompt } from "@/ai/flows/analyze-prompt";
 import { correctPrompt } from "@/ai/flows/correct-prompt";
 import { enhancePrompt } from "@/ai/flows/enhance-prompt";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { toast } from "@/hooks/use-toast";
+import { Icons } from "@/components/icons";
 
 export default function Home() {
   const [originalPrompt, setOriginalPrompt] = useState("");
@@ -38,6 +40,14 @@ export default function Home() {
     });
     setEnhancedPrompt(enhancementResult.enhancedPrompt);
     setEnhanceExplanation(enhancementResult.explanation);
+  };
+
+  const handleCopyEnhancedPrompt = () => {
+    navigator.clipboard.writeText(enhancedPrompt);
+    toast({
+      title: "Copied!",
+      description: "Enhanced prompt copied to clipboard.",
+    });
   };
 
   return (
@@ -98,11 +108,21 @@ export default function Home() {
         </Card>
 
         <Card>
-          <CardHeader>
-            <CardTitle>Enhanced Prompt</CardTitle>
-            <CardDescription>
-              Further enhanced with context and structure.
-            </CardDescription>
+          <CardHeader className="flex flex-row items-center justify-between">
+            <div>
+              <CardTitle>Enhanced Prompt</CardTitle>
+              <CardDescription>
+                Further enhanced with context and structure.
+              </CardDescription>
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleCopyEnhancedPrompt}
+              disabled={!enhancedPrompt}
+            >
+              <Icons.copy className="h-4 w-4" />
+            </Button>
           </CardHeader>
           <CardContent className="flex flex-col space-y-4">
             <ScrollArea className="h-[150px] w-full rounded-md border">
@@ -121,3 +141,4 @@ export default function Home() {
     </div>
   );
 }
+
