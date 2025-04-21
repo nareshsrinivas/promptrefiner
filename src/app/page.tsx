@@ -51,94 +51,86 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col md:flex-row min-h-screen p-4 space-y-4 md:space-x-4 md:space-y-0">
-      {/* Original Prompt Section */}
-      <div className="md:w-1/2">
-        <Card className="h-full">
+    <div className="container mx-auto p-6 md:p-8 lg:p-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Original Prompt Section */}
+        <Card className="hover:shadow-lg transition-shadow duration-300">
           <CardHeader>
-            <CardTitle>Original Prompt</CardTitle>
-            <CardDescription>Enter your prompt here.</CardDescription>
+            <CardTitle className="text-xl font-semibold">Original Prompt</CardTitle>
+            <CardDescription className="text-gray-500">Enter your prompt here.</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col space-y-4">
             <Textarea
               value={originalPrompt}
               onChange={(e) => setOriginalPrompt(e.target.value)}
               placeholder="Write your prompt..."
-              className="min-h-[150px]"
+              className="min-h-[150px] rounded-md shadow-sm focus:ring-primary focus:border-primary"
             />
-            <Button onClick={handleAnalyze} variant="secondary">
+            <Button onClick={handleAnalyze} variant="secondary" className="bg-gray-100 hover:bg-gray-200 text-gray-700 transition-colors duration-200">
               Analyze Prompt
             </Button>
             <ScrollArea className="h-[100px] w-full rounded-md border">
               {analyzedIssues.length > 0 ? (
                 <ul>
                   {analyzedIssues.map((issue, index) => (
-                    <li key={index} className="text-sm">
-                      - {issue}
-                    </li>
+                    <li key={index} className="text-sm p-2">- {issue}</li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-sm p-2 text-muted-foreground">
-                  No issues found.
-                </p>
+                <p className="text-sm p-2 text-muted-foreground">No issues found.</p>
               )}
             </ScrollArea>
           </CardContent>
         </Card>
-      </div>
 
-      {/* Optimized Prompt Section */}
-      <div className="md:w-1/2 flex flex-col space-y-4">
-        <Card>
-          <CardHeader>
-            <CardTitle>Corrected Prompt</CardTitle>
-            <CardDescription>
-              Refined version with spelling and grammar corrections.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="flex flex-col space-y-4">
-            <ScrollArea className="h-[150px] w-full rounded-md border">
-              <p className="p-2">{correctedPrompt || "Not corrected yet."}</p>
-            </ScrollArea>
-            <p className="text-sm text-muted-foreground">
-              Explanation: {correctExplanation || "No explanation available."}
-            </p>
-          </CardContent>
-        </Card>
+        {/* Optimized Prompt Section */}
+        <div className="flex flex-col space-y-6">
+          <Card className="hover:shadow-lg transition-shadow duration-300">
+            <CardHeader>
+              <CardTitle className="text-xl font-semibold">Corrected Prompt</CardTitle>
+              <CardDescription className="text-gray-500">Refined version with spelling and grammar corrections.</CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-col space-y-4">
+              <ScrollArea className="h-[150px] w-full rounded-md border">
+                <p className="p-2">{correctedPrompt || "Not corrected yet."}</p>
+              </ScrollArea>
+              <p className="text-sm text-muted-foreground">
+                Explanation: {correctExplanation || "No explanation available."}
+              </p>
+            </CardContent>
+          </Card>
 
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between">
-            <div>
-              <CardTitle>Enhanced Prompt</CardTitle>
-              <CardDescription>
-                Further enhanced with context and structure.
-              </CardDescription>
-            </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleCopyEnhancedPrompt}
-              disabled={!enhancedPrompt}
-            >
-              <Icons.copy className="h-4 w-4" />
-            </Button>
-          </CardHeader>
-          <CardContent className="flex flex-col space-y-4">
-            <ScrollArea className="h-[150px] w-full rounded-md border">
-              <p className="p-2">{enhancedPrompt || "Not enhanced yet."}</p>
-            </ScrollArea>
-            <p className="text-sm text-muted-foreground">
-              Explanation: {enhanceExplanation || "No explanation available."}
-            </p>
-          </CardContent>
-        </Card>
+          <Card className="hover:shadow-lg transition-shadow duration-300">
+            <CardHeader className="flex flex-row items-center justify-between">
+              <div>
+                <CardTitle className="text-xl font-semibold">Enhanced Prompt</CardTitle>
+                <CardDescription className="text-gray-500">Further enhanced with context and structure.</CardDescription>
+              </div>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleCopyEnhancedPrompt}
+                disabled={!enhancedPrompt}
+                className="hover:bg-gray-100 transition-colors duration-200"
+              >
+                <Icons.copy className="h-4 w-4" />
+              </Button>
+            </CardHeader>
+            <CardContent className="flex flex-col space-y-4">
+              <ScrollArea className="h-[150px] w-full rounded-md border">
+                <p className="p-2">{enhancedPrompt || "Not enhanced yet."}</p>
+              </ScrollArea>
+              <p className="text-sm text-muted-foreground">
+                Explanation: {enhanceExplanation || "No explanation available."}
+              </p>
+            </CardContent>
+          </Card>
 
-        <Button onClick={handleCorrectAndEnhance} className="mt-auto">
-          Correct and Enhance
-        </Button>
+          <Button onClick={handleCorrectAndEnhance} className="bg-primary text-primary-foreground hover:bg-primary/80 transition-colors duration-200 mt-auto">
+            Correct and Enhance
+          </Button>
+        </div>
       </div>
     </div>
   );
 }
-
